@@ -10,7 +10,7 @@ const LEGACY_CARDS = [
   {
     id: 1,
     title: "Pioneers",
-    image: "/image_bbec20.jpg",
+    image: "/slide1.webp",
     description:
       "We're dedicated to creating the industry narrative that others follow 3 years from now.",
     subDescription: "We paved the path for creative SEO and Digital PR.",
@@ -21,7 +21,7 @@ const LEGACY_CARDS = [
   {
     id: 2,
     title: "Award Winning",
-    image: "/image_bbec20.jpg",
+    image: "/slide2.webp",
     description:
       "A roll top bath full of 79 awards. Voted The Drum's best agency outside of London.",
     subDescription: "We are official judges for industry awards worldwide.",
@@ -32,7 +32,7 @@ const LEGACY_CARDS = [
   {
     id: 3,
     title: "Performance",
-    image: "/image_bbec20.jpg",
+    image: "/slide3.webp",
     description:
       "We don't just create noise; we drive growth and measurable results.",
     subDescription: "Our legacy is built on results that transform brands.",
@@ -49,14 +49,14 @@ export default function LegacySection() {
     const cards = gsap.utils.toArray(".card-wrapper");
 
     cards.forEach((card, i) => {
-      // শেষ কার্ডটি বাদে বাকিগুলোর জন্য অ্যানিমেশন
+    
       if (i < cards.length - 1) {
         gsap.to(card, {
-          // যখন পরের কার্ডটি আসবে, তখন এই কার্ডটি হালকা ছোট এবং ডার্ক হবে
+        
           scale: 0.9,
           opacity: 0.5,
           scrollTrigger: {
-            trigger: cards[i + 1], // ট্রিগার হবে পরের কার্ডটি
+            trigger: cards[i + 1], 
             start: "top 80%",
             end: "top 10%",
             scrub: true,
@@ -64,12 +64,12 @@ export default function LegacySection() {
         });
       }
 
-      // পিনিং লজিক: কার্ডটি ওপরে এসে আটকে যাবে
+      
       ScrollTrigger.create({
         trigger: card,
         start: "top 10%",
         pin: true,
-        pinSpacing: false, // এটিই ওভারল্যাপিং ইফেক্ট তৈরি করে
+        pinSpacing: false, 
         endTrigger: containerRef.current,
         end: "bottom bottom",
       });
@@ -93,10 +93,7 @@ export default function LegacySection() {
           <div
             key={card.id}
             className="card-wrapper relative w-full max-w-[620px] h-[85vh] flex items-start justify-center">
-            {/* Background Accent Layer (The shadow look) */}
-            <div
-              className={`absolute inset-0 ${card.accentColor} rounded-[45px] translate-x-4 translate-y-4 -z-10`}
-              style={{ transform: `rotate(${card.rotate}deg)` }}></div>
+        
 
             {/* Main Content Card */}
             <div
@@ -129,7 +126,7 @@ export default function LegacySection() {
         ))}
       </div>
 
-      {/* নিচের গ্যাপ যাতে স্ক্রল করার জায়গা থাকে */}
+      
       <div className="h-[20vh]"></div>
     </section>
   );
