@@ -12,6 +12,7 @@ import FeaturedWork from "./cmoponents/section/FeaturedWork";
 import OurServices from "./cmoponents/section/OurService";
 import ScrollingText from "./cmoponents/section/ScrollingText";
 import StackedCards from "./cmoponents/section/StackedCards";
+import WhatsNew from "./cmoponents/section/WhatsNew";
 
 export default function Home() {
   return (
@@ -43,7 +44,8 @@ export default function Home() {
       <FeaturedWork />
       <OurServices />
       <ScrollingText />
-      <StackedCards/>
+      <StackedCards />
+      <WhatsNew/>
       {/* <ReportSection />
       <SearchAnalysisSection />
       <ImageMarqueeSection />

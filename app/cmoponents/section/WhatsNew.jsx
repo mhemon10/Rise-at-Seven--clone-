@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Clock } from "lucide-react";
 
 const BLOG_DATA = [
   {
     id: 1,
     tag: "News",
-    image: "/news1.webp", 
+    image: "/whats-new-1.webp",
     author: "Carrie Rose",
     time: "2 mins",
     title: "Ryan McNamara Is Now Rise at Seven's Global Operations Director",
@@ -15,108 +15,111 @@ const BLOG_DATA = [
   {
     id: 2,
     tag: "Food/Hospitality/Drink",
-    image: "/news2.webp",
+    image: "/whats-new-2.webp",
     author: "Ray Saddiq",
     time: "2 mins",
     title:
-      "Rise at Seven Appointed by Coneys to Drive Demand and Retail Growth for them in the Chocolate Confectionery Category",
+      "Rise at Seven Appointed by Coneys to Drive Demand and Retail Growth",
   },
   {
     id: 3,
     tag: "Food/Hospitality/Drink",
-    image: "/news3.webp",
+    image: "/whats-new-3.webp",
     author: "Carrie Rose",
     time: "2 mins",
     title:
-      "Rise at Seven Appointed by Langtins to drive demand and retail growth for Noomz",
+      "Rise at Seven Appointed by Langtins to drive demand and retail growth",
   },
 ];
 
 export default function WhatsNew() {
   return (
-    <section className="bg-[#f3f3f3] py-20 px-6 md:px-12 font-sans text-black">
-      <div className="max-w-[1400px] mx-auto">
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-black/10 pb-8">
-          <div className="flex items-center gap-4">
-            <h2 className="text-6xl md:text-8xl font-bold tracking-tight">
+    <section className="bg-[#f8f8f8] py-24 px-6 md:px-12 font-sans text-black">
+      <div className="max-w-[1440px] mx-auto">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-black/5 pb-10">
+          <div className="flex items-center gap-5">
+            <h2 className="text-6xl md:text-[100px] font-bold tracking-tighter leading-none">
               What's
             </h2>
-            {/* Small Rounded Video/Image box in Title */}
-            <div className="w-16 h-16 md:w-24 md:h-24 bg-black rounded-2xl overflow-hidden mt-2">
+            <div className="w-16 h-16 md:w-28 md:h-28 bg-black rounded-3xl overflow-hidden rotate-[-5deg]">
               <img
-                src="/news1.webp"
+                src="/new-1.webp"
                 alt="featured"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover scale-110"
               />
             </div>
-            <h2 className="text-6xl md:text-8xl font-bold tracking-tight">
+            <h2 className="text-6xl md:text-[100px] font-bold tracking-tighter leading-none">
               New
             </h2>
           </div>
 
-          <button className="mt-6 md:mt-0 flex items-center gap-2 border border-black/20 px-6 py-2 rounded-full font-bold hover:bg-black hover:text-white transition-all duration-300">
-            Explore More Thoughts <ArrowUpRight size={16} />
+          <button className="mt-8 md:mt-0 flex items-center gap-2 border border-black/10 px-8 py-3 rounded-full font-bold text-sm hover:bg-black hover:text-white transition-all duration-500">
+            Explore More Thoughts <ArrowUpRight size={18} />
           </button>
         </div>
 
-        {/* Blog Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {BLOG_DATA.map((post) => (
             <div key={post.id} className="group cursor-pointer">
-              {/* Image Container with Hover Effect */}
-              <div className="relative aspect-[4/5] rounded-[30px] overflow-hidden mb-6">
+              {/* Image with Advanced Hover Effect */}
+              <div className="relative aspect-[4/5] rounded-[40px] overflow-hidden mb-8">
                 <img
                   src={post.image}
                   alt={post.title}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-[1.2s] cubic-bezier(0.2, 1, 0.3, 1) group-hover:scale-110"
                 />
 
-                {/* Tag Overlay */}
-                <div className="absolute top-5 left-5">
-                  <span className="bg-white/20 backdrop-blur-md text-white text-[12px] font-bold px-4 py-1.5 rounded-full border border-white/30">
+                {/* 1. Blur Overlay (Bottom to Top) */}
+                <div className="absolute inset-0 bg-white/20 backdrop-blur-md opacity-0 group-hover:opacity-100 translate-y-full group-hover:translate-y-0 transition-all duration-700 ease-in-out"></div>
+
+                {/* 2. Arrow Button in the Middle */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 delay-100">
+                  <div className="bg-[#b3f6e3] text-black w-20 h-20 rounded-full flex items-center justify-center shadow-xl">
+                    <ArrowUpRight size={32} strokeWidth={2.5} />
+                  </div>
+                </div>
+
+                {/* Tag (Always visible) */}
+                <div className="absolute top-6 left-6 z-10">
+                  <span className="bg-white/90 text-black text-[11px] font-black uppercase tracking-widest px-5 py-2 rounded-full shadow-sm">
                     {post.tag}
                   </span>
                 </div>
 
-                {/* Rise Logo Icon at bottom right */}
-                <div className="absolute bottom-5 right-5 text-white/50 text-2xl font-bold italic group-hover:text-white transition-colors">
+                {/* Logo mark bottom right */}
+                <div className="absolute bottom-6 right-8 text-white text-3xl font-black italic opacity-60 z-10">
                   7.
                 </div>
               </div>
 
-              {/* Meta Info */}
-              <div className="flex items-center gap-4 mb-4">
-                <div className="flex items-center gap-2 bg-white/50 px-3 py-1 rounded-full border border-black/5">
-                  <div className="w-5 h-5 rounded-full bg-gray-300 overflow-hidden">
-                    <img
-                      src={post.image}
-                      className="w-full h-full object-cover"
-                    />
+              {/* Meta & Title */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-5">
+                  <div className="flex items-center gap-2 bg-black/5 px-3 py-1.5 rounded-full">
+                    <div className="w-5 h-5 rounded-full overflow-hidden">
+                      <img
+                        src={post.image}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <span className="text-[11px] font-black uppercase tracking-tighter">
+                      {post.author}
+                    </span>
                   </div>
-                  <span className="text-[12px] font-bold opacity-70">
-                    {post.author}
-                  </span>
+                  <div className="flex items-center gap-1 text-black/40">
+                    <Clock size={14} />
+                    <span className="text-[11px] font-black uppercase tracking-tighter">
+                      {post.time}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5 opacity-60">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                  <span className="text-[12px] font-bold">{post.time}</span>
-                </div>
-              </div>
 
-              {/* Title */}
-              <h3 className="text-2xl md:text-3xl font-bold leading-[1.1] tracking-tight group-hover:underline decoration-2 underline-offset-4">
-                {post.title}
-              </h3>
+                <h3 className="text-3xl font-bold leading-[1.05] tracking-tighter group-hover:text-black/60 transition-colors">
+                  {post.title}
+                </h3>
+              </div>
             </div>
           ))}
         </div>
