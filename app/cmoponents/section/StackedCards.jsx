@@ -1,136 +1,136 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CARD_DATA = [
+const LEGACY_CARDS = [
   {
     id: 1,
     title: "Pioneers",
-    img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=600",
-    text: "We're dedicated to creating the industry narrative that others follow 3 years from now. We paved the path for creative SEO, multi-channel search with Digital PR, and Social Search and we will continue to do it.",
-    accent: "bg-[#a8f5d0]",
+    image: "/image_bbec20.jpg",
+    description:
+      "We're dedicated to creating the industry narrative that others follow 3 years from now.",
+    subDescription: "We paved the path for creative SEO and Digital PR.",
+    bgColor: "bg-black",
+    accentColor: "bg-[#bbf7d0]",
+    rotate: -3,
   },
   {
     id: 2,
-    title: "Visionaries",
-    img: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600",
-    text: "We're on a mission to be the first search-first agency to win a Cannes Lion disrupting the status quo. Innovation is at our core, and we push boundaries every single day.",
-    accent: "bg-[#fff0b0]",
+    title: "Award Winning",
+    image: "/image_bbec20.jpg",
+    description:
+      "A roll top bath full of 79 awards. Voted The Drum's best agency outside of London.",
+    subDescription: "We are official judges for industry awards worldwide.",
+    bgColor: "bg-[#bbf7d0]",
+    accentColor: "bg-white",
+    rotate: 2,
   },
   {
     id: 3,
-    title: "Innovators",
-    img: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=600",
-    text: "Strategic thinkers with a passion for results. We blend data-driven insights with creative excellence to deliver campaigns that perform across all search and social channels.",
-    accent: "bg-[#e8d5f5]",
+    title: "Performance",
+    image: "/image_bbec20.jpg",
+    description:
+      "We don't just create noise; we drive growth and measurable results.",
+    subDescription: "Our legacy is built on results that transform brands.",
+    bgColor: "bg-black",
+    accentColor: "bg-[#bbf7d0]",
+    rotate: -1.5,
   },
 ];
 
-export default function StackedCards() {
-  const sectionRef = useRef(null);
+export default function LegacySection() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray(".card-wrapper");
+    const cards = gsap.utils.toArray(".card-wrapper");
 
-      // কার্ডগুলো স্ট্যাক করার জন্য পিনিং সেকশন
+    cards.forEach((card, i) => {
+      // শেষ কার্ডটি বাদে বাকিগুলোর জন্য অ্যানিমেশন
+      if (i < cards.length - 1) {
+        gsap.to(card, {
+          // যখন পরের কার্ডটি আসবে, তখন এই কার্ডটি হালকা ছোট এবং ডার্ক হবে
+          scale: 0.9,
+          opacity: 0.5,
+          scrollTrigger: {
+            trigger: cards[i + 1], // ট্রিগার হবে পরের কার্ডটি
+            start: "top 80%",
+            end: "top 10%",
+            scrub: true,
+          },
+        });
+      }
+
+      // পিনিং লজিক: কার্ডটি ওপরে এসে আটকে যাবে
       ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "top top",
-        end: `+=${cards.length * 100}%`,
+        trigger: card,
+        start: "top 10%",
         pin: true,
-        scrub: 1,
-      });
-
-      cards.forEach((card, i) => {
-        // প্রথম কার্ডটি বাদে বাকিগুলো নিচ থেকে আসবে
-        if (i > 0) {
-          gsap.fromTo(
-            card,
-            { y: "120vh" }, // স্ক্রিনের অনেক নিচ থেকে শুরু হবে
-            {
-              y: 0,
-              ease: "none",
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: `${(i / cards.length) * 100}% top`,
-                end: `${((i + 1) / cards.length) * 100}% top`,
-                scrub: true,
-              },
-            },
-          );
-        }
+        pinSpacing: false, // এটিই ওভারল্যাপিং ইফেক্ট তৈরি করে
+        endTrigger: containerRef.current,
+        end: "bottom bottom",
       });
     });
 
-    return () => ctx.revert();
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
   }, []);
 
   return (
-    <div className="bg-[#f0f0f0]">
-      {/* Header Text */}
-      <div className="text-center pt-20 pb-10">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-black/60">
+    <section ref={containerRef} className="bg-[#ebebeb] py-20 px-6 relative">
+      <div className="max-w-[1400px] mx-auto text-center mb-24">
+        <p className="text-[12px] font-black uppercase tracking-[0.3em] text-gray-500">
           Legacy In The Making
         </p>
       </div>
 
-      <section
-        ref={sectionRef}
-        className="relative h-screen flex justify-center items-center overflow-hidden">
-        <div
-          ref={containerRef}
-          className="relative w-full max-w-4xl h-[600px] flex justify-center items-center px-6">
-          {CARD_DATA.map((card, i) => (
+      <div className="flex flex-col items-center">
+        {LEGACY_CARDS.map((card, index) => (
+          <div
+            key={card.id}
+            className="card-wrapper relative w-full max-w-[620px] h-[85vh] flex items-start justify-center">
+            {/* Background Accent Layer (The shadow look) */}
             <div
-              key={card.id}
-              className="card-wrapper absolute inset-0 flex justify-center items-center"
-              style={{ zIndex: i + 1 }}>
-              {/* Main Card */}
-              <div
-                className={`relative w-full h-full bg-black rounded-[40px] p-10 md:p-16 flex flex-col items-center text-center justify-center shadow-2xl shadow-black/40`}
-                style={{
-                  transform: `rotate(${i % 2 === 0 ? "2deg" : "-2deg"})`, // হালকা বাঁকানো লুক
-                }}>
-                {/* Layered Decorative Card behind */}
-                <div
-                  className={`absolute -inset-2 ${card.accent} rounded-[45px] -z-10 opacity-40 blur-sm scale-[1.02] rotate-1`}></div>
+              className={`absolute inset-0 ${card.accentColor} rounded-[45px] translate-x-4 translate-y-4 -z-10`}
+              style={{ transform: `rotate(${card.rotate}deg)` }}></div>
 
-                {/* Profile Image Box */}
-                <div className="w-32 h-32 md:w-44 md:h-44 rounded-[30px] overflow-hidden mb-8 border-4 border-white/5">
-                  <img
-                    src={card.img}
-                    alt={card.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+            {/* Main Content Card */}
+            <div
+              className={`w-full ${card.bgColor} ${card.bgColor === "bg-black" ? "text-white" : "text-black"} rounded-[50px] p-10 md:p-14 flex flex-col items-center shadow-[0_30px_60px_rgba(0,0,0,0.2)]`}>
+              {/* Profile Image Box */}
+              <div className="w-32 h-32 md:w-44 md:h-44 rounded-[35px] overflow-hidden mb-10 border-4 border-white/5">
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-                {/* Card Title */}
-                <h3 className="text-white text-5xl md:text-7xl font-bold tracking-tighter mb-6">
-                  {card.title}
-                </h3>
+              {/* Title */}
+              <h2 className="text-5xl md:text-6xl font-bold mb-8 tracking-tighter text-center">
+                {card.title}
+              </h2>
 
-                {/* Card Description */}
-                <p className="text-white/80 text-base md:text-lg max-w-2xl leading-relaxed">
-                  {card.text}
+              {/* Text Content */}
+              <div className="max-w-[440px] text-center space-y-6">
+                <p className="text-[16px] md:text-[18px] leading-snug font-medium opacity-90">
+                  {card.description}
+                </p>
+                <p className="text-[14px] md:text-[15px] leading-relaxed opacity-60">
+                  {card.subDescription}
                 </p>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Spacer to allow scrolling after the cards */}
-      <div className="h-screen bg-white flex items-center justify-center">
-        <h2 className="text-black text-4xl font-bold italic">
-          Next Section...
-        </h2>
+          </div>
+        ))}
       </div>
-    </div>
+
+      {/* নিচের গ্যাপ যাতে স্ক্রল করার জায়গা থাকে */}
+      <div className="h-[20vh]"></div>
+    </section>
   );
 }
